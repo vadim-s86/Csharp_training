@@ -99,15 +99,15 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("email3")).SendKeys(contact.Email3);
             driver.FindElement(By.Name("homepage")).Clear();
             driver.FindElement(By.Name("homepage")).SendKeys(contact.HomePage);
-            new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText(contact.BDay);
-            new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText(contact.BMonth);
+            driver.FindElement(By.Name("bday")).SendKeys(contact.BDay);
+            driver.FindElement(By.Name("bmonth")).SendKeys(contact.BMonth);
             driver.FindElement(By.Name("byear")).Clear();
             driver.FindElement(By.Name("byear")).SendKeys(contact.BYear);
-            new SelectElement(driver.FindElement(By.Name("aday"))).SelectByText(contact.ADay);
-            new SelectElement(driver.FindElement(By.Name("amonth"))).SelectByText(contact.AMonth);
+            driver.FindElement(By.Name("aday")).SendKeys(contact.ADay);
+            driver.FindElement(By.Name("amonth")).SendKeys(contact.AMonth);
             driver.FindElement(By.Name("ayear")).Clear();
             driver.FindElement(By.Name("ayear")).SendKeys(contact.AYear);
-            new SelectElement(driver.FindElement(By.Name("new_group"))).SelectByText(contact.Group);
+            driver.FindElement(By.Name("new_group")).SendKeys(contact.Group);
         }
 
         private void InitContactCreation()

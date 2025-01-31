@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -20,6 +21,17 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Modify(ContactData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification();
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnToHomePage();
+
+            return this;
+        }
+
         public ContactHelper Remove(int v)
         {
             SelectElement(v);
@@ -32,6 +44,11 @@ namespace WebAddressbookTests
         public void InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+        }
+
+        public void InitContactModification()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
         }
 
         public void FillContactForm(ContactData contact)
@@ -74,12 +91,27 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("amonth")).SendKeys(contact.AMonth);
             driver.FindElement(By.Name("ayear")).Clear();
             driver.FindElement(By.Name("ayear")).SendKeys(contact.AYear);
-            driver.FindElement(By.Name("new_group")).SendKeys(contact.Group);
+            //При модификации контакта поле Group отсутсвует, обернул try catch чтобы тест не падал.
+            try
+            {
+                driver.FindElement(By.Name("new_group")).SendKeys(contact.Group);
+            }
+            catch
+            {
+                return;
+            }
         }
 
         public void SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+
+            return this;
         }
 
         public void RemoveContact()

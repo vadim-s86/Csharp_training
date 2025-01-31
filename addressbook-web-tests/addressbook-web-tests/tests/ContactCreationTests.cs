@@ -18,5 +18,19 @@ namespace WebAddressbookTests
 
             app.Contacts.Create(contactData);
         }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData contactData = new ContactData("");
+            contactData.LastName = "";
+            contactData.MobilPhone = "";
+            contactData.Email = "";
+            contactData.BDay = "";
+            contactData.BMonth = "";
+            contactData.BYear = "";
+
+            app.Contacts.Create(contactData);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 
 
@@ -18,6 +19,7 @@ namespace WebAddressbookTests
         public ApplicationManager()
         {
             driver = new FirefoxDriver();
+            //driver = new ChromeDriver();
             baseURL = "http://localhost";
 
             loginHelper = new LoginHelper(this);

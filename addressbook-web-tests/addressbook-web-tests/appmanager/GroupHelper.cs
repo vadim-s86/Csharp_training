@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Diagnostics.Eventing.Reader;
 
 
 namespace WebAddressbookTests
@@ -42,6 +40,7 @@ namespace WebAddressbookTests
             SelectElement(v);
             RemoveGroup();
             ReturnToGroupsPage();
+            
 
             return this;
         }

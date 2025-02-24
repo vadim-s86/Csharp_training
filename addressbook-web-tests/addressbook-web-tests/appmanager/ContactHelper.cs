@@ -1,5 +1,5 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -36,22 +36,27 @@ namespace WebAddressbookTests
         {
             SelectElement(v);
             RemoveContact();
+            AcceptContactAlert();
             manager.Navigator.GoToHomePage();
 
             return this;
         }
 
-        public void InitContactCreation()
+        public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+
+            return this;
         }
 
-        public void InitContactModification()
+        public ContactHelper InitContactModification()
         {
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+
+            return this;
         }
 
-        public void FillContactForm(ContactData contact)
+        public ContactHelper FillContactForm(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
@@ -91,20 +96,24 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("amonth")).SendKeys(contact.AMonth);
             driver.FindElement(By.Name("ayear")).Clear();
             driver.FindElement(By.Name("ayear")).SendKeys(contact.AYear);
-            //При модификации контакта поле Group отсутсвует, обернул try catch чтобы тест не падал.
+            //При модификации контакта поле Group отсутствует, обернул в try catch чтобы тест не падал.
             try
             {
                 driver.FindElement(By.Name("new_group")).SendKeys(contact.Group);
             }
             catch
             {
-                return;
+                return this;
             }
+
+            return this;
         }
 
-        public void SubmitContactCreation()
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+
+            return this;
         }
 
         public ContactHelper SubmitContactModification()
@@ -114,14 +123,26 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public void RemoveContact()
+        public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+
+            return this;
         }
 
-        public void ReturnToHomePage()
+        private ContactHelper AcceptContactAlert()
+        { 
+            if(Regex.IsMatch(driver.SwitchTo().Alert().Text, "^Delete 1 addresses[\\s\\S]$"))
+                driver.SwitchTo().Alert().Accept();
+
+            return this;
+        }
+
+        public ContactHelper ReturnToHomePage()
         {
             driver.FindElement(By.LinkText("home page")).Click();
+
+            return this;
         }
     }
 }

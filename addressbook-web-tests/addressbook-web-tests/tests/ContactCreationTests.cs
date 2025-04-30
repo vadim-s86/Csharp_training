@@ -22,13 +22,7 @@ namespace WebAddressbookTests
         [Test]
         public void EmptyContactCreationTest()
         {
-            ContactData contactData = new ContactData("");
-            contactData.LastName = "";
-            contactData.MobilPhone = "";
-            contactData.Email = "";
-            contactData.BDay = "";
-            contactData.BMonth = "";
-            contactData.BYear = "";
+            ContactData contactData = new ContactData(null);
 
             app.Contacts.Create(contactData);
         }

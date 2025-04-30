@@ -34,6 +34,11 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int v)
         {
+            manager.Navigator.GoToHomePage();
+            if (! IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new ContactData("First_Name"));
+            }
             SelectElement(v);
             RemoveContact();
             AcceptContactAlert();
@@ -51,6 +56,10 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification()
         {
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new ContactData("First_Name"));
+            }
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
 
             return this;
@@ -58,52 +67,30 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contact.MiddleName);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
-            driver.FindElement(By.Name("nickname")).Clear();
-            driver.FindElement(By.Name("nickname")).SendKeys(contact.NickName);
-            driver.FindElement(By.Name("title")).Clear();
-            driver.FindElement(By.Name("title")).SendKeys(contact.Title);
-            driver.FindElement(By.Name("company")).Clear();
-            driver.FindElement(By.Name("company")).SendKeys(contact.Company);
-            driver.FindElement(By.Name("address")).Clear();
-            driver.FindElement(By.Name("address")).SendKeys(contact.Address);
-            driver.FindElement(By.Name("home")).Clear();
-            driver.FindElement(By.Name("home")).SendKeys(contact.HomePhone);
-            driver.FindElement(By.Name("mobile")).Clear();
-            driver.FindElement(By.Name("mobile")).SendKeys(contact.MobilPhone);
-            driver.FindElement(By.Name("work")).Clear();
-            driver.FindElement(By.Name("work")).SendKeys(contact.WorkPhone);
-            driver.FindElement(By.Name("fax")).Clear();
-            driver.FindElement(By.Name("fax")).SendKeys(contact.Fax);
-            driver.FindElement(By.Name("email")).Clear();
-            driver.FindElement(By.Name("email")).SendKeys(contact.Email);
-            driver.FindElement(By.Name("email2")).Clear();
-            driver.FindElement(By.Name("email2")).SendKeys(contact.Email2);
-            driver.FindElement(By.Name("email3")).Clear();
-            driver.FindElement(By.Name("email3")).SendKeys(contact.Email3);
-            driver.FindElement(By.Name("homepage")).Clear();
-            driver.FindElement(By.Name("homepage")).SendKeys(contact.HomePage);
-            driver.FindElement(By.Name("bday")).SendKeys(contact.BDay);
-            driver.FindElement(By.Name("bmonth")).SendKeys(contact.BMonth);
-            driver.FindElement(By.Name("byear")).Clear();
-            driver.FindElement(By.Name("byear")).SendKeys(contact.BYear);
-            driver.FindElement(By.Name("aday")).SendKeys(contact.ADay);
-            driver.FindElement(By.Name("amonth")).SendKeys(contact.AMonth);
-            driver.FindElement(By.Name("ayear")).Clear();
-            driver.FindElement(By.Name("ayear")).SendKeys(contact.AYear);
-            //При модификации контакта поле Group отсутствует, обернул в try catch чтобы тест не падал.
-            try
+            Type(By.Name("firstname"), contact.FirstName);
+            Type(By.Name("middlename"), contact.MiddleName);
+            Type(By.Name("lastname"), contact.LastName);
+            Type(By.Name("nickname"), contact.NickName);
+            Type(By.Name("title"), contact.Title);
+            Type(By.Name("company"), contact.Company);
+            Type(By.Name("address"), contact.Address);
+            Type(By.Name("home"), contact.HomePhone);
+            Type(By.Name("mobile"), contact.MobilPhone);
+            Type(By.Name("work"), contact.WorkPhone);
+            Type(By.Name("fax"), contact.Fax);
+            Type(By.Name("email"), contact.Email);
+            Type(By.Name("email2"), contact.Email2);
+            Type(By.Name("email3"), contact.Email3);
+            Type(By.Name("homepage"), contact.HomePage);
+            Type(By.Name("bday"), contact.BDay);
+            Type(By.Name("bmonth"), contact.BMonth);
+            Type(By.Name("byear"), contact.BYear);
+            Type(By.Name("aday"), contact.ADay);
+            Type(By.Name("amonth"), contact.AMonth);
+            Type(By.Name("ayear"), contact.AYear);
+            if (IsElementPresent(By.Name("new_group")))
             {
-                driver.FindElement(By.Name("new_group")).SendKeys(contact.Group);
-            }
-            catch
-            {
-                return this;
+                Type(By.Name("new_group"), contact.Group);
             }
 
             return this;
